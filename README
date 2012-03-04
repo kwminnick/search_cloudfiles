@@ -1,0 +1,90 @@
+search_cloudfiles
+
+This project was created to allow Cloud Files users the ability to search.  There are
+2 components to this project and lots of pre-reqs.
+
+1. index-cf.py
+
+This python script will extract the text from your cloud files files and store the
+results in a cloud files container.  It will also run lucene on this container and
+store the indexes into a local directory.
+
+2. Web App
+
+TODO
+
+Installation Instructions
+
+   * Create a 4GB Cloud Server running Ubuntu 10.04 LTS
+   * Login to server
+   * Update operating system
+      * apt-get update
+      * apt-get upgrade
+   * Install pre-req packages
+      * apt-get install build-essential libcurl4-openssl-dev libxml2-dev libssl-dev libfuse-dev openjdk-6-jre
+   * Download and install cloudfuse
+      * wget https://github.com/redbo/cloudfuse/tarball/master
+      * tar -zxf master
+      * cd redbo-cloudfuse-10003a82
+      * ./configure
+      * make
+      * make install
+      * cd /root/
+      * vi .cloudfuse
+         * Add the following lines:
+
+		username=xxx
+		api_key=yyy
+		auth_url=https://auth.api.rackspacecloud.com/v1.0
+		use_snet=True
+
+      * mkdir cloudfiles
+      * ls cloudfiles (you should see your containers)
+   * Download Lucene
+      * wget <lucene mirror>
+      * tar -zxf lucene-3.5.0.tgz
+      * export CLASSPATH=/root/lucene-3.5.0/lucene-core-3.5.0.jar:/root/lucene-3.5.0/contrib/demo/lucene-demo-3.5.0.jar:$CLASSPATH
+
+   * Install tika
+      * wget http://apache.deathculture.net//tika/tika-app-1.0.jar
+
+   * Now it's time to index your account using the index-cf.py script.
+   * vi index-cf.py
+	* Edit the constants section to meet your needs.
+   * python index-cf.py
+	* This should output a lot and not throw any exceptions
+
+   * You should be able to search your files now.
+	* java org.apache.lucene.demo.SearchFiles
+
+   * Part 2 - Installing the web interface
+
+License (BSD)
+
+* Copyright (c) 2011, Kevin Minnick
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above copyright
+*       notice, this list of conditions and the following disclaimer in the
+*       documentation and/or other materials provided with the distribution.
+*     * Neither the name of Kevin Minnick nor the
+*       names of its contributors may be used to endorse or promote products
+*       derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY Kevin Minnick ''AS IS'' AND ANY
+* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL Kevin Minnick BE LIABLE FOR ANY
+* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
