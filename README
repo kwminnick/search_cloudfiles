@@ -39,6 +39,7 @@ Installation Instructions
 		use_snet=True
 
       * mkdir cloudfiles
+      * cloudfuse /root/cloudfiles/
       * ls cloudfiles (you should see your containers)
    * Download Lucene
       * wget <lucene mirror>
